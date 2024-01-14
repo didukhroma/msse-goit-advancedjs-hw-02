@@ -15,9 +15,11 @@ const changeBgColor = color => (ref.body.style.background = color);
 
 const handleClickStart = e => {
   ref.timerId = setInterval(() => changeBgColor(getRandomHexColor()), 1000);
+  e.target.disabled = true;
 };
 
 const handleClickStop = e => {
+  ref.startBtn.disabled = false;
   if (!ref.timerId) return;
   clearInterval(ref.timerId);
 };
