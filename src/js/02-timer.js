@@ -85,10 +85,11 @@ function enableStartBtn() {
 }
 
 function changeData(data) {
+  // all spans from html with class value
   const timerSpanArray = Array.from(refs.timerRef.children)
     .flatMap(el => [...el.children])
     .filter(el => el.classList.contains('value'));
-
+  // find needed span and change text from data
   Object.keys(data).forEach(el => {
     timerSpanArray.find(span =>
       Object.keys(span.dataset).includes(el)
