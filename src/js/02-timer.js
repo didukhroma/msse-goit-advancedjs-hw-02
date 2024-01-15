@@ -14,7 +14,7 @@ const refs = {
 let timerMs = null;
 // Settings for iziToast
 iziToast.settings({
-  iconUrl: './src/images/warning-icon.png',
+  iconUrl: './img/warning-icon.png',
   message: 'Please choose a date in the future',
   timeout: 2000,
   position: 'topCenter',
