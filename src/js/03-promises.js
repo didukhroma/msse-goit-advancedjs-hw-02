@@ -3,11 +3,8 @@ import 'izitoast/dist/css/iziToast.min.css';
 
 // Settings for iziToast
 iziToast.settings({
-  timeout: 10000,
+  timeout: 3000,
   position: 'topRight',
-  onOpening: function (instance, toast) {
-    console.info('callback abriu!');
-  },
 });
 
 const formRef = document.querySelector('.form');
