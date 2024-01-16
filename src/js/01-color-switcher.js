@@ -2,6 +2,9 @@
  * References Object
  *
  * @type {{ body: HTMLElement | null; startBtn: HTMLElement | null; stopBtn: HTMLElement | null; }}
+ *  @property {HTMLElement} body - HTML Element body
+ * @property {HTMLElement} startBtn - HTML Element Button Start
+ * @property {HTMLElement} stopBtn -HTML Element Button Stop
  */
 const ref = {
   body: document.querySelector('body'),
@@ -16,12 +19,12 @@ const ref = {
  *
  */
 let timerId = null;
-//Disabled Stop button
+/**Disabled stop button */
 changeStatusBtn(ref.stopBtn);
 // Event listeners
-// Start Button
+/**Start Button */
 ref.startBtn.addEventListener('click', handleClickStart);
-// Stop Button
+/**Stop Button */
 ref.stopBtn.addEventListener('click', handleClickStop);
 
 // FUNCTIONS

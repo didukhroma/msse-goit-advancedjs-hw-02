@@ -4,24 +4,51 @@ import iziToast from 'izitoast';
 // Додатковий імпорт стилів
 import 'flatpickr/dist/flatpickr.min.css';
 import 'izitoast/dist/css/iziToast.min.css';
-// Refs
+
+/**
+ * References Object
+ *
+ * @type {{ inputDateRef: HTMLElement | null; btnStartRef: HTMLElement | null; timerRef: HTMLElement | null; }}
+ * @property {HTMLElement} inputDateRef - HTML Element Input where pick date
+ * @property {HTMLElement} btnStartRef - HTML Element Button Start
+ * @property {HTMLElement} timerRef -HTML Element where indicate timer
+ *
+};
+ */
 const refs = {
   inputDateRef: document.querySelector('#datetime-picker'),
   btnStartRef: document.querySelector('[data-start]'),
   timerRef: document.querySelector('.timer'),
 };
-// Timer time
+
+/**
+ * Initial time
+ *
+ * @type {number | null}
+ *
+ */
 let timerMs = null;
-// Settings for iziToast
-iziToast.settings({
+
+/**
+ * Settings for iziToast
+ *
+ * @type {{ title: string; message: string; timeout: number; position: string; backgroundColor: string; }}
+ * @description Read more about iziToast settings at https://izitoast.marcelodolza.com/
+ */
+const settingsIziToast = {
   title: 'X',
   message: 'Please choose a date in the future',
   timeout: 2000,
   position: 'topCenter',
   backgroundColor: 'red',
-});
-
-// Options for flatpickr
+};
+/**
+ * Options for flatpickr
+ *
+ * @type {{ enableTime: boolean; time_24hr: boolean; defaultDate: string; minuteIncrement: number; onClose(selectedDates: string): func; }}
+ * @description Read more about flatpickr options at https://flatpickr.js.org/
+ *
+ */
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -33,26 +60,50 @@ const options = {
       iziToast.show();
     } else {
       timerMs = dateDiff;
-      enableStartBtn();
+      changeDisabledStatus(refs.btnStartRef);
     }
   },
 };
-// Logic
-disableStartBtn();
+
+/**iziToast base settings */
+iziToast.settings(settingsIziToast);
+/**Disabled start button */
+changeDisabledStatus(refs.btnStartRef);
+/**flatpickr base settings */
 flatpickr(refs.inputDateRef, options);
+
+// Event listeners
+/**Start Button */
 refs.btnStartRef.addEventListener('click', handleClickStart);
-//functions
-//------------------------
+
+// FUNCTIONS
+//----------------------------------------------
+/**
+ * Handler click-event on start button. After click disabled input and disabled start button. Every 1 second change time
+ *
+ * @param {*} e click-event
+ */
 function handleClickStart(e) {
-  disableStartBtn();
+  changeDisabledStatus(refs.inputDateRef);
+  changeDisabledStatus(refs.btnStartRef);
   changeData(convertMs(timerMs));
   let timerId = setInterval(() => {
     timerMs -= 1000;
-    if (timerMs <= 0) clearInterval(timerId);
+    if (timerMs <= 1000) {
+      clearInterval(timerId);
+      changeDisabledStatus(refs.inputDateRef);
+    }
     changeData(convertMs(timerMs));
   }, 1000);
 }
+//----------------------------------------------
 
+/**
+ * Converting input miliseconds to object with properties days, hours, minutes and seconds
+ *
+ * @param {number} ms
+ * @returns {{ days: number; hours: number; minutes: number; seconds: number; }}
+ */
 function convertMs(ms) {
   // Number of milliseconds per unit of time
   const second = 1000;
@@ -71,19 +122,36 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
+//----------------------------------------------
 
+/**
+ * Converting input value to string and if number less than 10 add before value symbol 0. If typeof value !== number function returns string "XX"
+ *
+ * @param {number} value
+ * @returns {string}
+ */
 function addLeadingZero(value) {
-  let strValue = String(value);
+  if (typeof value !== 'number') return 'XX';
+  const strValue = String(value);
   return strValue.length > 1 ? strValue : strValue.padStart(2, '0');
 }
 
-function disableStartBtn() {
-  refs.btnStartRef.disabled = true;
-}
-function enableStartBtn() {
-  refs.btnStartRef.disabled = false;
+//----------------------------------------------
+/**
+ * Change disabled status in HTML element
+ *
+ * @param {HTMLElement} element
+ */
+function changeDisabledStatus(element) {
+  element.disabled = !element.disabled;
 }
 
+//----------------------------------------------
+/**
+ * Change data in HTML elements where indicate timer
+ *
+ * @param {object} data
+ */
 function changeData(data) {
   // all spans from html with class value
   const timerSpanArray = Array.from(refs.timerRef.children)
