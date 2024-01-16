@@ -1,29 +1,87 @@
-const getRandomHexColor = () => {
-  return `#${Math.floor(Math.random() * 16777215)
-    .toString(16)
-    .padStart(6, 0)}`;
-};
-
+/**
+ * References Object
+ *
+ * @type {{ body: HTMLElement | null; startBtn: HTMLElement | null; stopBtn: HTMLElement | null; }}
+ */
 const ref = {
   body: document.querySelector('body'),
   startBtn: document.querySelector('[data-start]'),
   stopBtn: document.querySelector('[data-stop]'),
 };
 
+/**
+ * Initial timer ID
+ *
+ * @type {number | null}
+ *
+ */
 let timerId = null;
+//Disabled Stop button
+changeStatusBtn(ref.stopBtn);
+// Event listeners
+// Start Button
+ref.startBtn.addEventListener('click', handleClickStart);
+// Stop Button
+ref.stopBtn.addEventListener('click', handleClickStop);
 
-const changeBgColor = color => (ref.body.style.background = color);
-
-const handleClickStart = e => {
-  e.target.disabled = true;
+// FUNCTIONS
+//----------------------------------------------
+/**
+ * Change body background color
+ *
+ * @param {string} color
+ *
+ */
+function changeBgColor(color) {
+  if (typeof color !== 'string') return;
+  ref.body.style.background = color;
+}
+//----------------------------------------------
+/**
+ * Random hexadecimal color
+ *
+ * @returns {string}  hexadecimal color
+ *
+ * @example
+ * console.log(getRandomHexColor());
+ * //Logs: '#5a42ef'
+ *
+ */
+function getRandomHexColor() {
+  return `#${Math.floor(Math.random() * 16777215)
+    .toString(16)
+    .padStart(6, 0)}`;
+}
+//----------------------------------------------
+/**
+ * Handler click-event on start button. After click disabled start button and enabled stop button. Every 1 second change background color in body
+ *
+ * @param {*} e click-event
+ */
+function handleClickStart(e) {
+  changeStatusBtn(e.target);
+  changeStatusBtn(ref.stopBtn);
   timerId = setInterval(() => changeBgColor(getRandomHexColor()), 1000);
-};
+}
 
-const handleClickStop = e => {
-  ref.startBtn.disabled = false;
+//----------------------------------------------
+/**
+ * Handler click-event on stop button. After click enabled start button and disabled stop button.
+ *
+ * @param {*} e click-event
+ */
+function handleClickStop(e) {
+  changeStatusBtn(e.target);
+  changeStatusBtn(ref.startBtn);
   if (!timerId) return;
   clearInterval(timerId);
-};
-
-ref.startBtn.addEventListener('click', handleClickStart);
-ref.stopBtn.addEventListener('click', handleClickStop);
+}
+//----------------------------------------------
+/**
+ * Change disabled status in button element
+ *
+ * @param {HTMLElement} element
+ */
+function changeStatusBtn(element) {
+  element.disabled = !element.disabled;
+}
