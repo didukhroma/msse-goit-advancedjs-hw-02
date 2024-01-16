@@ -81,7 +81,7 @@ refs.btnStartRef.addEventListener('click', handleClickStart);
 /**
  * Handler click-event on start button. After click disabled input and disabled start button. Every 1 second change time
  *
- * @param {*} e click-event
+ * @param {Event} e click-event
  */
 function handleClickStart(e) {
   changeDisabledStatus(refs.inputDateRef);

@@ -59,7 +59,7 @@ function getRandomHexColor() {
 /**
  * Handler click-event on start button. After click disabled start button and enabled stop button. Every 1 second change background color in body
  *
- * @param {*} e click-event
+ * @param {Event} e click-event
  */
 function handleClickStart(e) {
   changeStatusBtn(e.target);
@@ -71,7 +71,7 @@ function handleClickStart(e) {
 /**
  * Handler click-event on stop button. After click enabled start button and disabled stop button.
  *
- * @param {*} e click-event
+ * @param {Event} e click-event
  */
 function handleClickStop(e) {
   changeStatusBtn(e.target);
