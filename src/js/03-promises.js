@@ -39,7 +39,7 @@ function handlerSubmit(e) {
     step: step.value,
     amount: amount.value,
   };
-
+  formRef.reset();
   let promiseIdx = 1;
   let delay = Number(formData.firstDelay);
 
@@ -61,7 +61,6 @@ function handlerSubmit(e) {
     promiseIdx += 1;
     delay += Number(formData.step);
   }
-  formRef.reset();
 }
 
 //----------------------------------------------
