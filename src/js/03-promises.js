@@ -4,9 +4,10 @@ import 'izitoast/dist/css/iziToast.min.css';
 /**
  * Settings for iziToast
  *
- *  @type {{  timeout: number; position: string;  }}
+ * @type {{  timeout: number; position: string;target: string; targetFirst: bool;maxWidth: number; }}
  * @description Read more about iziToast settings at https://izitoast.marcelodolza.com/
  */
+
 const iziToastSettings = {
   timeout: 3000,
   position: 'topRight',
