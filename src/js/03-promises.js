@@ -8,7 +8,7 @@ import 'izitoast/dist/css/iziToast.min.css';
  * @description Read more about iziToast settings at https://izitoast.marcelodolza.com/
  */
 const iziToastSettings = {
-  timeout: 50000,
+  timeout: 3000,
   position: 'topRight',
   target: '.js-wrapper',
   targetFirst: false,
