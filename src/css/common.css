@@ -32,3 +32,12 @@ img {
 .label {
   text-transform: uppercase;
 }
+.js-wrapper.iziToast-target {
+  position: absolute;
+  top: 0;
+}
+
+.iziToast-capsule {
+  display: flex;
+  justify-content: end;
+}
